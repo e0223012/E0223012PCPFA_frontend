@@ -34,6 +34,20 @@ export const AppProvider = ({ children }) => {
     initializeAuth();
   }, [state.jwtToken]);
 
+  // Expose state to window.appState for automated compliance
+  useEffect(() => {
+    window.appState = {
+      authUser: state.authenticatedUser,
+      token: state.jwtToken,
+      users: state.users,
+      projects: state.projects,
+      issues: state.issues,
+      comments: state.comments,
+      filters: {},
+      analytics: state.analytics
+    };
+  }, [state]);
+
   return (
     <AppContext.Provider value={{ state, dispatch }}>
       {children}
